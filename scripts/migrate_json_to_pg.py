@@ -16,8 +16,8 @@ CREATE TABLE IF NOT EXISTS users (
     ltoken_v2 TEXT,
     daily_spent INTEGER NOT NULL DEFAULT 0,
     last_resin INTEGER,
-    created_at TIMESTAMPZ NOT NULL DEFAULT now(),
-    updated_at TIMESTAMPZ NOT NULL DEFAULT now()
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 """
 CREATE_GUILDS_SQL = "CREATE TABLE IF NOT EXISTS guilds (guild_id BIGINT PRIMARY KEY, leaderboard_channel BIGINT);"
@@ -47,7 +47,7 @@ def upsert_user(cur, discord_id: int, state: dict):
     genshin_uid = safe_int(state.get("uid"))
     hsr_uid = safe_int(state.get("hsr_uid"))
     enabled = bool(state.get("enabled", True))
-    notified_full = bool(state.get("notified_full", True))
+    notified_full = bool(state.get("notified_full", False))
     ltuid_v2 = state.get("ltuid_v2")
     ltoken_v2 = state.get("ltoken_v2")
     daily_spent = int(state.get("daily_spent", 0) or 0)
@@ -61,7 +61,7 @@ def upsert_user(cur, discord_id: int, state: dict):
             enabled = EXCLUDED.enabled,
             notified_full = EXCLUDED.notified_full,
             ltuid_v2 = EXCLUDED.ltuid_v2,
-            ltoken_v2 = EXCLUDED,ltoken_v2,
+            ltoken_v2 = EXCLUDED.ltoken_v2,
             daily_spent = EXCLUDED.daily_spent,
             last_resin = EXCLUDED.last_resin,
             updated_at = now();
