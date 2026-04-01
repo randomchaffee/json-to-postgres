@@ -121,7 +121,7 @@ def save_subscriptions(data: Dict[str, Any]) -> None:
                         ltuid_v2 = EXCLUDED.ltuid_v2,
                         ltoken_v2 = EXCLUDED.ltoken_v2,
                         daily_spent = EXCLUDED.daily_spent,
-                        last_resin = EXLUDED.last_resin,
+                        last_resin = EXCLUDED.last_resin,
                         updated_at = now()
                     """,
                     (
@@ -171,7 +171,7 @@ def save_subscriptions(data: Dict[str, Any]) -> None:
             for k, v in (data.get("_meta") or {}).items():
                 incoming_meta.add(k)
                 cur.execute(
-                    "INSERT INTO meta (key, value) VALUES (%s,%s) ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.values;",
+                    "INSERT INTO meta (key, value) VALUES (%s,%s) ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;",
                     (k, str(v)),
                 )
             to_delete_m = existing_meta - incoming_meta
