@@ -9,6 +9,6 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - resinly_db_data:/var/lib/postgresql/data
 volumes:
-  db_data:
+  resinly_db_data:
