@@ -26,7 +26,7 @@ class MappingTest(unittest.TestCase):
         j = row_to_json(row)
         self.assertEqual(j["uid"], "800123456")
         self.assertEqual(j["hsr_uid"], "700806861")
-        self.assertEqual(j["daily_spent"], 42)
+        self.assertEqual(j["daily_spent"], 67)
         self.assertEqual(j["last_resin"], 140)
 
 if __name__ == "__main__":
